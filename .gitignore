@@ -1,8 +1,20 @@
+# Node / Vercel
+node_modules/
+.vercel
+.env
+.env.local
+
+# Python / Django
 __pycache__/
 *.py[cod]
 *.egg-info/
 venv/
-.env
+.venv/
 media/
 staticfiles/
 db.sqlite3
+
+# Logs & Système
+*.log
+.DS_Store
+Thumbs.db
