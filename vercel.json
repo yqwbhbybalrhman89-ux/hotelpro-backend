@@ -1,16 +1,14 @@
 {
-  "version": 2,
   "builds": [
     {
-      "src": "hotelsmart/wsgi.py",
-      "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
+      "src": "hotelpro_backend/wsgi.py",
+      "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "hotelsmart/wsgi.py"
+      "dest": "hotelpro_backend/wsgi.py"
     }
   ]
 }

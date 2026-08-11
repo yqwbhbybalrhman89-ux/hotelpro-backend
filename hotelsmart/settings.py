@@ -98,3 +98,5 @@ CORS_ALLOWED_ORIGINS = os.getenv(
 CORS_ALLOW_CREDENTIALS = True
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+
+ALLOWED_HOSTS = ['.vercel.app', 'localhost', '127.0.0.1']
