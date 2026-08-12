@@ -52,6 +52,7 @@ class ReservationSerializer(serializers.ModelSerializer):
             "room_nom",
             "client_nom",
             "client_telephone",
+            "mode_paiement", 
             "date_debut",
             "date_fin",
             "prix_total",

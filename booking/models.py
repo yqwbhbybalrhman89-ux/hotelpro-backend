@@ -40,7 +40,8 @@ class Room(models.Model):
         choices=StatutChoices.choices,
         default=StatutChoices.DISPONIBLE,
     )
-    image = models.ImageField(upload_to="rooms/", blank=True, null=True)
+    # URLField pour accepter directement les liens d'images (Imgur, Unsplash, etc.)
+    image = models.URLField(max_length=500, blank=True, null=True)
 
     class Meta:
         verbose_name = "Salle / Chambre"
@@ -76,6 +77,13 @@ class Reservation(models.Model):
         EN_ATTENTE = "en_attente", "En attente"
         CONFIRME = "confirme", "Confirmé"
 
+    # Choices pour le mode de paiement du Frontend
+    class ModePaiementChoices(models.TextChoices):
+        BANKILY = "bankily", "Bankily"
+        MASRIVI = "masrivi", "Masrivi"
+        SEDAD = "sedad", "Sedad"
+        ESPECES = "especes", "Espèces"
+
     room = models.ForeignKey(
         Room,
         on_delete=models.CASCADE,
@@ -83,6 +91,14 @@ class Reservation(models.Model):
     )
     client_nom = models.CharField(max_length=150)
     client_telephone = models.CharField(max_length=20)
+    
+    # Champ connecté directement aux boutons du Frontend
+    mode_paiement = models.CharField(
+        max_length=20,
+        choices=ModePaiementChoices.choices,
+        default=ModePaiementChoices.ESPECES,
+    )
+
     date_debut = models.DateTimeField()
     date_fin = models.DateTimeField()
     prix_total = models.DecimalField(max_digits=12, decimal_places=2, editable=False)
@@ -137,8 +153,9 @@ class Reservation(models.Model):
         return (heures * self.room.prix_par_unite).quantize(Decimal("0.01"))
 
     def save(self, *args, **kwargs):
-        self.full_clean()
+        # FIX : On calcule le prix AVANT la validation full_clean()
         self.prix_total = self.calculer_prix_total()
+        self.full_clean()
         super().save(*args, **kwargs)
         
         # Mettre à jour le statut de la chambre associée
@@ -146,7 +163,7 @@ class Reservation(models.Model):
             self.room.update_statut_auto()
 
     def __str__(self):
-        return f"Réservation {self.client_nom} - {self.room.numero_nom}"
+        return f"Réservation {self.client_nom} - {self.room.numero_nom} ({self.mode_paiement})"
 
 
 class Payment(models.Model):
