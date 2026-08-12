@@ -2,18 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "backend/hotelsmart/wsgi.py",
+      "src": "hotelsmart/wsgi.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
       "src": "/(.*)",
-      "dest": "backend/hotelsmart/wsgi.py"
+      "dest": "hotelsmart/wsgi.py"
     }
   ]
 }
