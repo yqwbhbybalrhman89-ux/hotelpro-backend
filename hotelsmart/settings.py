@@ -14,7 +14,8 @@ except ImportError:
     pass
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-change-me-in-production")
-DEBUG = os.getenv("DEBUG", "False") == "True"
+# Force DEBUG à True pour voir l'erreur exacte et afficher l'interface REST Framework
+DEBUG = True
 
 ALLOWED_HOSTS = [
     ".vercel.app",
@@ -40,6 +41,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -125,3 +127,6 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.vercel.app', '*']
+
