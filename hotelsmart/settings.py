@@ -74,12 +74,12 @@ if DB_HOST:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.mysql",
-            "NAME": os.getenv("DB_NAME", "hotelsmart"),
-            "USER": os.getenv("DB_USER", "root"),
-            "PASSWORD": os.getenv("DB_PASSWORD", ""),
-            "HOST": DB_HOST,
-            "PORT": os.getenv("DB_PORT", "3306"),
-            "OPTIONS": {"charset": "utf8mb4"},
+        "NAME": os.getenv("DB_NAME", "railway"),
+        "USER": os.getenv("DB_USER", "root"),
+        "PASSWORD": os.getenv("DB_PASSWORD", ""),
+        "HOST": os.getenv("DB_HOST", ""),
+        "PORT": os.getenv("DB_PORT", "3306"),
+        "OPTIONS": {"charset": "utf8mb4"},
         }
     }
 else:
